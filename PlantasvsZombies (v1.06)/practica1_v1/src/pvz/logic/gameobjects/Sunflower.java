@@ -6,9 +6,9 @@ import utils.Position;
 
 public class Sunflower {
 	
-	private int cost = 20;
-	private int damage = 0;
-	private int initial_health = 1;
+	private final int cost = 20;
+	private final int damage = 0;
+	private final int initial_health = 1;
 	private int health;
 	
 	private Position pos;

@@ -32,9 +32,22 @@ public class Game {
 		this.longSeed = seed;
 		this.level = level;
 		this.playerQuit = false;
+		sunflowers= new SunflowerList();
+		peashooters=new PeashooterList();
 	}
-	
+	//HAY QUE TERMINAR LA IMPLEMENTACION
 	public String  positionToString(Position p) {
+		boolean encontrado= false;
+		int i=0;//Sunflowers
+		int j=0;//Peashooters
+		int k=0;//Zombies
+		while (!encontrado) {
+			if (i<this.sunflowers.getNumberOfSunflowers()) {
+				
+			}
+		}
+		
+		
 		return "";
 		
 	}
@@ -71,5 +84,12 @@ public class Game {
 
 	public boolean haveFinished() {
 		return false;
+	}
+	
+	public SunflowerList getSunflowerList() {
+		return this.sunflowers;
+	}
+	public PeashooterList getPeashooterList() {
+		return this.peashooters;
 	}
 }

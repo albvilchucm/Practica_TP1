@@ -6,9 +6,9 @@ import pvz.logic.Game;
 
 public class Peashooter {
 	
-	private int cost = 50;
-	private int damage = 1;
-	private int initial_health = 3;
+	private final int cost = 50;
+	private final int damage = 1;
+	private final int initial_health = 3;
 	private int health;
 	
 	private Position pos;

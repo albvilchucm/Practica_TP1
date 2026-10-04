@@ -5,6 +5,11 @@ import pvz.view.GamePrinter;
 import pvz.view.GameView;
 import pvz.view.Messages;
 import java.util.Scanner;
+import pvz.logic.gameobjects.Peashooter;
+import pvz.logic.gameobjects.PeashooterList;
+import pvz.logic.gameobjects.Sunflower;
+import pvz.logic.gameobjects.SunflowerList;
+import utils.Position;
 
 /**
  * Input/output coordinator of the game (the C in MVC).
@@ -28,6 +33,9 @@ public class Controller {
 	/**
 	 * Runs the game logic.
 	 */
+	/**
+	 * 
+	 */
 	public void run() {
 		while (!game.getPlayerQuit() && !game.haveFinished() )	{
 			this.view.showGame();
@@ -37,7 +45,7 @@ public class Controller {
 			boolean avanzar = false;
 			while(!avanzar && !this.game.getPlayerQuit()) {
 				switch(opchar) {
-				case 'a':       avanzar=true; break;
+				case 'a':  this.add(opstring[1].toLowerCase().charAt(0), Integer.parseInt(opstring[2]),Integer.parseInt(opstring[3]) );    avanzar=true; break;
 				case 'l': this.view.showMessage(Messages.LIST); break;
 				case 'r':
 				case 'h': this.view.showMessage(Messages.HELP); break;
@@ -55,13 +63,38 @@ public class Controller {
 			}
 		}	
 	}
+	private void add(char plant, int col, int row) {
+		if (plant=='s') {
+			Position pos= new Position(row, col);
+			Sunflower sun= new Sunflower(pos, this.game);
+			SunflowerList listaSun= this.game.getSunflowerList();
+			listaSun.add(sun);
+		}
+		else {
+			Position pos= new Position(row, col);
+			Peashooter pea= new Peashooter(pos, this.game);
+			PeashooterList listaPea= this.game.getPeashooterList();
+			listaPea.add(pea);
+		}
+	}
+	
 	
 	private char getOption(String[] op1) { //Para la practica_v2 conviene hacerlo mejor con un tipo numerado
 		char res= 'i';
 		String op = op1[0];
+		char planta=' ';
+		int col=-1;
+		int row=-1;
+		if (op1.length>1) {
+			if (op1[1].toLowerCase().equals("sunflower")||op1[1].toLowerCase().equals("peashooter")||op1[1].toLowerCase().equals("p")||op1[1].toLowerCase().equals("s"))
+			planta= op1[1].toLowerCase().charAt(0);
+			col=Integer.parseInt(op1[2]);
+			row=Integer.parseInt(op1[3]);
+		}
+
 		op = op.toLowerCase();
 		if (op.length()>1) {
-			if(op.equals("add")) {res= 'a';}
+			if(op.equals("add")&& (planta=='s'||planta=='p')&&(0<=col && col<=7)&&(0<=row && row<=3)) {res= 'a';}
 			else if(op.equals("list")) {res= 'l';}
 			else if(op.equals("reset")) {res= 'r';}
 			else if(op.equals("help")) {res= 'h';}
@@ -70,7 +103,7 @@ public class Controller {
 		}
 		
 		else{
-			if(op.equals("a")) {res= 'a';}
+			if(op.equals("a")&& (planta=='s'||planta=='p')&&(0<=col && col<=7)&&(0<=row && row<=3)) {res= 'a';}
 			else if(op.equals("l")) {res= 'l';}
 			else if(op.equals("r")) {res= 'r';}
 			else if(op.equals("h")) {res= 'h';}
