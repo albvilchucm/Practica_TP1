@@ -5,6 +5,7 @@ import pvz.control.Level;
 import utils.Position;
 import pvz.logic.gameobjects.PeashooterList;
 import pvz.logic.gameobjects.SunflowerList;
+import pvz.view.Messages;
 
 
 public class Game {
@@ -34,23 +35,9 @@ public class Game {
 		this.playerQuit = false;
 		sunflowers= new SunflowerList();
 		peashooters=new PeashooterList();
+		zombies = new ZombiesManager(this, level, rand);
 	}
 	//HAY QUE TERMINAR LA IMPLEMENTACION
-	public String  positionToString(Position p) {
-		boolean encontrado= false;
-		int i=0;//Sunflowers
-		int j=0;//Peashooters
-		int k=0;//Zombies
-		while (!encontrado) {
-			if (i<this.sunflowers.getNumberOfSunflowers()) {
-				
-			}
-		}
-		
-		
-		return "";
-		
-	}
 	
 	public boolean getPlayerQuit() {
 		return this.playerQuit;
@@ -71,17 +58,34 @@ public class Game {
 		return this.coins;
 	}
 	
+	public void looseSunCoins(int i) {
+		this.coins = this.coins - i;
+	}
+	
 	public static Position newZombiePosition (int rows) {
 		Position a= new Position(0, rows);
 		return a;
 	}
 	
-	public static boolean isEmpty (Position p) {
-		//recorrer las listas de zombies, peashooters y sunflowers mirando si se pueden añadir
-		
-		return true;
+	public boolean isEmpty (Position p) {
+	return (this.sunflowers.isEmpty(p) || this.peashooters.isEmpty(p) || this.zombies.isEmpty(p));
 	}
-
+	
+	public String  positionToString(Position p) {
+		if(!this.sunflowers.isEmpty(p)) {
+			return sunflowers.iconInPosition(p);
+			}
+		else if(!this.peashooters.isEmpty(p)) {
+			return peashooters.iconInPosition(p);
+		}
+		else if(!this.zombies.isEmpty(p)) {
+			return zombies.iconInPosition(p);
+		}
+	
+		return " ";
+		
+	}
+	
 	public boolean haveFinished() {
 		return false;
 	}
@@ -92,4 +96,7 @@ public class Game {
 	public PeashooterList getPeashooterList() {
 		return this.peashooters;
 	}
+	public void nextCycle() {
+		this.cycles = this.cycles+1;
+	}	
 }

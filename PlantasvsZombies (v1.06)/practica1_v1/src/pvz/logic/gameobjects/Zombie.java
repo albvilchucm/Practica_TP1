@@ -23,7 +23,7 @@ public class Zombie {
 	}
 	
 	public String getIcon() {
-		return Messages.ZOMBIE_ICON;
+		return String.format(Messages.ZOMBIE_ICON, health);
 	}
 	
 	public boolean isInPosition(Position pos) {

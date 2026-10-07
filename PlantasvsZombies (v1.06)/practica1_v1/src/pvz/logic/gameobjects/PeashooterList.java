@@ -14,8 +14,17 @@ public class PeashooterList {
 	}
 
 	public String iconInPosition(Position pos) {
-
-		return "";
+		String str = " ";
+		int i = 0;
+		boolean encontrado = false;
+		while (!encontrado && i<this.numberOfPeashooters) {
+			if(this.peashooters[i].isInPosition(pos)) {
+				str = this.peashooters[i].getIcon();
+				encontrado = true;
+			}
+			i++;
+		}
+		return str;
 	}
 
 	public void update() {
@@ -27,8 +36,15 @@ public class PeashooterList {
 	}
 
 	public boolean isEmpty(Position pos) {
-
-		return true;
+		int i = 0;
+		boolean encontrado = false;
+		while (!encontrado && i<this.numberOfPeashooters) {
+			if(this.peashooters[i].isInPosition(pos)) {
+				encontrado = true;
+			}
+			i++;
+		}
+		return !encontrado;
 	}
 
 	private void removeFromIndex(int ind) {

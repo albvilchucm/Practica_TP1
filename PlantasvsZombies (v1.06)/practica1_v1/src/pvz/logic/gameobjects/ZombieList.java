@@ -16,7 +16,17 @@ public class ZombieList {
 	}
 	
 	public String iconInPosition(Position pos) {
-		return "";
+		String str = " ";
+		int i = 0;
+		boolean encontrado = false;
+		while (!encontrado && i<this.numberOfZombies) {
+			if(this.zombies[i].isInPosition(pos)) {
+				str = this.zombies[i].getIcon();
+				encontrado = true;
+			}
+			i++;
+		}
+		return str;
 	}
 	
 	public void add(Zombie zombie) {
@@ -29,8 +39,15 @@ public class ZombieList {
 	}
 	
 	public boolean isEmpty (Position pos) {
-		
-		return true;
+		int i = 0;
+		boolean encontrado = false;
+		while (!encontrado && i<this.numberOfZombies) {
+			if(this.zombies[i].isInPosition(pos)) {
+				encontrado = true;
+			}
+			i++;
+		}
+		return !encontrado;
 	}
 	
 	public void update() {

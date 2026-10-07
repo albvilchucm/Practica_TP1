@@ -6,9 +6,9 @@ import utils.Position;
 
 public class Sunflower {
 	
-	private final int cost = 20;
-	private final int damage = 0;
-	private final int initial_health = 1;
+	public static final int cost = 20;
+	private static final int damage = 0;
+	private static final int initial_health = 1;
 	private int health;
 	
 	private Position pos;
@@ -21,7 +21,7 @@ public class Sunflower {
 	}
 	
 	public String getIcon() {
-		return Messages.SUNFLOWER_ICON;
+		return String.format(Messages.SUNFLOWER_ICON, health);
 	}
 	
 	public boolean isInPosition(Position posi) {
@@ -29,7 +29,7 @@ public class Sunflower {
 	}
 	
 	public static String getDescription() {
-		return Messages.SUNFLOWER_DESCRIPTION;
+		return String.format(Messages.SUNFLOWER_DESCRIPTION,cost,damage,initial_health);
 	}
 	
 	public boolean isAlive() {

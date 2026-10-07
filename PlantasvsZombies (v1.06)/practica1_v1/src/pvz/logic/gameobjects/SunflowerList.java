@@ -18,8 +18,17 @@ public class SunflowerList {
 	}
 	
 	public String iconInPosition(Position pos) {
-
-		return "";
+		String str = " ";
+		int i = 0;
+		boolean encontrado = false;
+		while (!encontrado && i<this.numberOfSunflowers) {
+			if(this.sunflowers[i].isInPosition(pos)) {
+				str = this.sunflowers[i].getIcon();
+				encontrado = true;
+			}
+			i++;
+		}
+		return str;
 	}
 
 	public void update() {
@@ -31,8 +40,15 @@ public class SunflowerList {
 	}
 
 	public boolean isEmpty(Position pos) {
-
-		return true;
+		int i = 0;
+		boolean encontrado = false;
+		while (!encontrado && i<this.numberOfSunflowers) {
+			if(this.sunflowers[i].isInPosition(pos)) {
+				encontrado = true;
+			}
+			i++;
+		}
+		return !encontrado;
 	}
 
 	private void removeFromIndex(int ind) {

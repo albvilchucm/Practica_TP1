@@ -45,7 +45,7 @@ public class Controller {
 			boolean avanzar = false;
 			while(!avanzar && !this.game.getPlayerQuit()) {
 				switch(opchar) {
-				case 'a':  this.add(opstring[1].toLowerCase().charAt(0), Integer.parseInt(opstring[2]),Integer.parseInt(opstring[3]) );    avanzar=true; break;
+				case 'a':  if(this.add(opstring[1].toLowerCase().charAt(0), Integer.parseInt(opstring[2]),Integer.parseInt(opstring[3]))) {    avanzar=true;} break;
 				case 'l': this.view.showMessage(Messages.LIST); break;
 				case 'r':
 				case 'h': this.view.showMessage(Messages.HELP); break;
@@ -58,37 +58,53 @@ public class Controller {
 					opchar = getOption(opstring);
 				}
 				else if (avanzar) {
-					//cycles++;	
+					this.game.nextCycle();//cycles++;	
 				}
 			}
 		}	
 	}
-	private void add(char plant, int col, int row) {
-		if (plant=='s') {
-			Position pos= new Position(row, col);
-			Sunflower sun= new Sunflower(pos, this.game);
-			SunflowerList listaSun= this.game.getSunflowerList();
-			listaSun.add(sun);
+
+	private boolean add(char plant, int col, int row) {
+		Position pos = new Position(row, col);
+		if (game.isEmpty(pos)) {
+			if (plant == 's' && (game.getSunCoins() >= Sunflower.cost)) {
+				Sunflower sun = new Sunflower(pos, this.game);
+				SunflowerList listaSun = this.game.getSunflowerList();
+				listaSun.add(sun);
+				this.game.looseSunCoins(Sunflower.cost);
+				
+				return true;
+			} 
+			else if (plant == 'p' && (game.getSunCoins() >= Peashooter.cost)) {
+				Peashooter pea = new Peashooter(pos, this.game);
+				PeashooterList listaPea = this.game.getPeashooterList();
+				listaPea.add(pea);
+				this.game.looseSunCoins(Peashooter.cost);
+				return true;
+			}
+			this.view.showMessage(Messages.NOT_ENOUGH_COINS);
 		}
-		else {
-			Position pos= new Position(row, col);
-			Peashooter pea= new Peashooter(pos, this.game);
-			PeashooterList listaPea= this.game.getPeashooterList();
-			listaPea.add(pea);
-		}
+		return false;
 	}
 	
 	
 	private char getOption(String[] op1) { //Para la practica_v2 conviene hacerlo mejor con un tipo numerado
 		char res= 'i';
-		String op = op1[0];
+		String op= "";
 		char planta=' ';
 		int col=-1;
 		int row=-1;
-		if (op1.length>1) {
+		
+		
+		if (op1.length==1) {
+		op = op1[0];
+		}
+		
+		else if (op1.length==4) {
+			op=op1[0];
 			if (op1[1].toLowerCase().equals("sunflower")||op1[1].toLowerCase().equals("peashooter")||op1[1].toLowerCase().equals("p")||op1[1].toLowerCase().equals("s"))
 			planta= op1[1].toLowerCase().charAt(0);
-			col=Integer.parseInt(op1[2]);
+			col = Integer.parseInt(op1[2]);
 			row=Integer.parseInt(op1[3]);
 		}
 

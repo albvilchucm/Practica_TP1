@@ -27,8 +27,7 @@ public class Messages {
 	
 	public static final String USAGE_SEED_PARAM = "\t<seed>: %s".formatted(Messages.SEED_NOT_A_NUMBER);
 
-	public static final String WELCOME = String.format("%s %n", GAME_NAME + VERSION);
-	
+	public static final String WELCOME = String.format("%s %s%n", GAME_NAME, VERSION);
 
 	public static final String ALLOWED_LEVELS = "Level must be one of: %s".formatted(Level.all(", "));
 
@@ -54,7 +53,6 @@ public class Messages {
 			"[h]elp: print this help message",
 			"[e]xit: terminate the program",
 			"[n]one | \"\": skips cycle",
-			"",
 	};
 	
 	public static final String HELP = String.join(System.lineSeparator(), HELP_LINES);
@@ -71,11 +69,11 @@ public class Messages {
 
 	public static final String INVALID_COMMAND = "Invalid command";
 	
-	public static final String PEASHOOTER_DESCRIPTION = "[P]eashooter: cost='50' suncoins, damage='1', endurance='3'";
+	public static final String PEASHOOTER_DESCRIPTION = "[P]eashooter: cost='%d' suncoins, damage='%d', endurance='%d'";
 
 	public static final String PEASHOOTER_ICON = " P[%02d]";
 	
-	public static final String SUNFLOWER_DESCRIPTION = "[S]unflower: cost='20' suncoins, damage='0', endurance='1'";
+	public static final String SUNFLOWER_DESCRIPTION = "[S]unflower: cost='%d' suncoins, damage='%d', endurance='%d'";
 
 	public static final String SUNFLOWER_ICON = " S[%02d]";
 
@@ -96,8 +94,6 @@ public class Messages {
 	public static final String ZOMBIES_WIN = "Zombies win!";
 
 	public static final String PLAYER_WINS = "Player wins!";
-	
-	
 
 
 	/**
