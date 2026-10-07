@@ -70,7 +70,7 @@ public class Game {
 	}
 	
 	public boolean isEmpty (Position p) {
-	return (this.sunflowers.isEmpty(p) || this.peashooters.isEmpty(p) || this.zombies.isEmpty(p));
+	return (this.sunflowers.isEmpty(p) && this.peashooters.isEmpty(p) && this.zombies.isEmpty(p));
 	}
 	
 	public String  positionToString(Position p) {
