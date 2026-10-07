@@ -3,7 +3,9 @@ package pvz.logic;
 import java.util.Random;
 import pvz.control.Level;
 import utils.Position;
+import pvz.logic.gameobjects.Peashooter;
 import pvz.logic.gameobjects.PeashooterList;
+import pvz.logic.gameobjects.Sunflower;
 import pvz.logic.gameobjects.SunflowerList;
 import pvz.view.Messages;
 
@@ -90,13 +92,21 @@ public class Game {
 		return false;
 	}
 	
-	public SunflowerList getSunflowerList() {
-		return this.sunflowers;
-	}
-	public PeashooterList getPeashooterList() {
-		return this.peashooters;
-	}
 	public void nextCycle() {
 		this.cycles = this.cycles+1;
-	}	
+	}
+	
+	public void addObject (char plant,Position pos) {
+			if (plant == 's') {
+				Sunflower sun = new Sunflower(pos, this);
+				this.sunflowers.add(sun);
+				this.looseSunCoins(Sunflower.cost);
+			} 
+			else if (plant == 'p') {
+				Peashooter pea = new Peashooter(pos, this);
+				this.peashooters.add(pea);
+				this.looseSunCoins(Peashooter.cost);
+			}
+	}
+	
 }

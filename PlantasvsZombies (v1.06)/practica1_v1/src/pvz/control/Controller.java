@@ -67,26 +67,18 @@ public class Controller {
 	private boolean add(char plant, int col, int row) {
 		Position pos = new Position(row, col);
 		if (game.isEmpty(pos)) {
-			if (plant == 's' && (game.getSunCoins() >= Sunflower.cost)) {
-				Sunflower sun = new Sunflower(pos, this.game);
-				SunflowerList listaSun = this.game.getSunflowerList();
-				listaSun.add(sun);
-				this.game.looseSunCoins(Sunflower.cost);
-				
-				return true;
-			} 
-			else if (plant == 'p' && (game.getSunCoins() >= Peashooter.cost)) {
-				Peashooter pea = new Peashooter(pos, this.game);
-				PeashooterList listaPea = this.game.getPeashooterList();
-				listaPea.add(pea);
-				this.game.looseSunCoins(Peashooter.cost);
+			if ((plant == 's' && (game.getSunCoins() >= Sunflower.cost))
+					|| (plant == 'p' && (game.getSunCoins() >= Peashooter.cost))) {
+				this.game.addObject(plant, pos);
 				return true;
 			}
-			this.view.showMessage(Messages.NOT_ENOUGH_COINS);
+			else if ((plant == 's' && (game.getSunCoins() < Sunflower.cost))
+					|| (plant == 'p' && (game.getSunCoins() < Peashooter.cost))) {
+				this.view.showMessage(Messages.NOT_ENOUGH_COINS);
+			}
 		}
 		return false;
 	}
-	
 	
 	private char getOption(String[] op1) { //Para la practica_v2 conviene hacerlo mejor con un tipo numerado
 		char res= 'i';
