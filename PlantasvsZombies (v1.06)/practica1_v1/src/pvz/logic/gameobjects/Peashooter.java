@@ -37,7 +37,12 @@ public class Peashooter {
 	}
 	
 	public void update() {
-		
+		Position pos = this.pos.right();
+		boolean shoot = false;
+		while(!shoot && pos.col()<Game.NUM_COLS) {
+			//si hay un zombie en la posicion
+			//dispara
+		}
 	}
 	
 	private void shoot() {

@@ -94,7 +94,7 @@ public class ZombiesManager {
 	}
 	
 	public boolean allZombiesWereKilled() {
-		return (this.remainingZombies==0);
+		return (this.remainingZombies==0 && this.zombielist.size()==0);
 	}
 	
 	public void removeDead() {

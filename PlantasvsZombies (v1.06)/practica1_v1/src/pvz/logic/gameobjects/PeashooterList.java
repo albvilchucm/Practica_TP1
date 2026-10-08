@@ -17,8 +17,8 @@ public class PeashooterList {
 		String str = " ";
 		int i = 0;
 		boolean encontrado = false;
-		while (!encontrado && i<this.numberOfPeashooters) {
-			if(this.peashooters[i].isInPosition(pos)) {
+		while (!encontrado && i < this.numberOfPeashooters) {
+			if (this.peashooters[i].isInPosition(pos)) {
 				str = this.peashooters[i].getIcon();
 				encontrado = true;
 			}
@@ -28,22 +28,24 @@ public class PeashooterList {
 	}
 
 	public void update() {
-
+		for (int i = 0; i < this.numberOfPeashooters; i++) {
+			this.peashooters[i].update();
+		}
 	}
 
 	public void removeDead() {
 		for (int i = 0; i < this.numberOfPeashooters; i++) {
-			 if(!this.peashooters[i].isAlive()) {
-				 this.removeFromIndex(i);
-			 }
+			if (!this.peashooters[i].isAlive()) {
+				this.removeFromIndex(i);
+			}
 		}
 	}
 
 	public boolean isEmpty(Position pos) {
 		int i = 0;
 		boolean encontrado = false;
-		while (!encontrado && i<this.numberOfPeashooters) {
-			if(this.peashooters[i].isInPosition(pos)) {
+		while (!encontrado && i < this.numberOfPeashooters) {
+			if (this.peashooters[i].isInPosition(pos)) {
 				encontrado = true;
 			}
 			i++;
@@ -52,8 +54,8 @@ public class PeashooterList {
 	}
 
 	private void removeFromIndex(int ind) {
-		for (int i = 0; i < this.numberOfPeashooters-1; i++) {
-			this.peashooters[i] = this.peashooters[i+1];
+		for (int i = 0; i < this.numberOfPeashooters - 1; i++) {
+			this.peashooters[i] = this.peashooters[i + 1];
 		}
 		this.numberOfPeashooters--;
 	}

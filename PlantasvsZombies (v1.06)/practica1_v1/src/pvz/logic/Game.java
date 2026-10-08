@@ -35,7 +35,7 @@ public class Game {
 		this.longSeed = seed;
 		this.level = level;
 		this.playerQuit = false;
-		this.rand= new Random(seed);
+		this.rand= new Random(this.longSeed);
 		sunflowers= new SunflowerList();
 		peashooters=new PeashooterList();
 		zombies = new ZombiesManager(this, level, this.rand);
