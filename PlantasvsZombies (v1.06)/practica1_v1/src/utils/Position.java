@@ -35,4 +35,14 @@ public class Position {
     public int hashCode() {
         return Objects.hash(row, col);
     }
+	
+	public Position left() {
+		Position pos = new Position (this.row,this.col-1);
+		return pos;
+	}
+	
+	public Position right() {
+		Position pos = new Position (this.row,this.col+1);
+		return pos;
+	}
 }

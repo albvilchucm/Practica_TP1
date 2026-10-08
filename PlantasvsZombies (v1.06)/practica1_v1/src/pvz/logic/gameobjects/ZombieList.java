@@ -9,6 +9,7 @@ public class ZombieList {
 	
 	public ZombieList() {
 		this.numberOfZombies = 0;
+		this.zombies = new Zombie[3];
 	}
 	
 	public int size() {
@@ -30,7 +31,20 @@ public class ZombieList {
 	}
 	
 	public void add(Zombie zombie) {
-		
+		if (this.numberOfZombies == this.zombies.length) {
+			Zombie[] nuevo = new Zombie[this.numberOfZombies + 1];
+			for (int i = 0; i < this.numberOfZombies; i++) {
+				nuevo[i] = this.zombies[i];
+			}
+
+			nuevo[this.numberOfZombies] = zombie;
+			this.zombies = nuevo;
+		}
+		else {
+			this.zombies[this.numberOfZombies]=zombie;
+		}
+
+		this.numberOfZombies++;
 	}
 	
 	public boolean damage(Position pos, int dam) {
@@ -55,7 +69,11 @@ public class ZombieList {
 	}
 	
 	public void removeDead() {
-		
+		for (int i = 0; i < this.numberOfZombies; i++) {
+			 if(!this.zombies[i].isAlive()) {
+				 this.removeFromIndex(i);
+			 }
+		}
 	}
 	
 	public boolean anyInColumn(int col) {
@@ -64,7 +82,10 @@ public class ZombieList {
 	}
 	
 	private void removeFromIndex (int ind) {
-		
+		for(int i = ind;i<this.numberOfZombies-1;i++) {
+			this.zombies[i]=this.zombies[i+1];
+		}
+		this.numberOfZombies--;
 	}
 	
 }

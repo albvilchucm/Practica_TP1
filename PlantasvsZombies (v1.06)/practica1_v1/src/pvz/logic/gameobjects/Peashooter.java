@@ -6,9 +6,9 @@ import pvz.logic.Game;
 
 public class Peashooter {
 	
-	public static final int cost = 50;
-	private static final int damage = 1;
-	private static final int initial_health = 3;
+	public static final int COST = 50;
+	private static final int DAMAGE = 1;
+	private static final int INITIAL_HEALTH = 3;
 	private int health;
 	
 	private Position pos;
@@ -17,7 +17,7 @@ public class Peashooter {
 	public Peashooter(Position position, Game game2) {
 		this.pos = position;
 		this.game = game2;
-		this.health = initial_health;
+		this.health = INITIAL_HEALTH;
 	}
 	
 	public String getIcon() {
@@ -29,7 +29,7 @@ public class Peashooter {
 	}
 	
 	public static String getDescription() {
-		return String.format(Messages.SUNFLOWER_DESCRIPTION,cost,damage,initial_health);
+		return String.format(Messages.SUNFLOWER_DESCRIPTION,COST,DAMAGE,INITIAL_HEALTH);
 	}
 	
 	public boolean isAlive() {
@@ -57,4 +57,5 @@ public class Peashooter {
 	}
 	
 }
+
 

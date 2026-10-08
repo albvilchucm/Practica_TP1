@@ -20,13 +20,9 @@ import utils.Position;
 public class ZombiesManager {
 
 	private Game game;
-
 	private Level level;
-
 	private Random rand;
-
 	private int remainingZombies;
-
 	private ZombieList zombielist;
 
 	public ZombiesManager(Game game, Level level, Random rand) {
@@ -66,7 +62,8 @@ public class ZombiesManager {
 		boolean canAdd = this.remainingZombies > 0 && shouldAddZombie() && game.isEmpty(zombiePosition);
 
 		if(canAdd) {
-			// TODO fill your code
+			Zombie zombie = new Zombie(zombiePosition,this.game);
+			this.zombielist.add(zombie);
 		}
 		return canAdd;
 	}
@@ -101,7 +98,7 @@ public class ZombiesManager {
 	}
 	
 	public void removeDead() {
-		
+		this.zombielist.removeDead();
 	}
 	
 }

@@ -32,11 +32,18 @@ public class SunflowerList {
 	}
 
 	public void update() {
-
+		for (int i = 0; i < this.numberOfSunflowers; i++) {
+			 this.sunflowers[i].update();
+			 
+			}
 	}
 
 	public void removeDead() {
-
+		for (int i = 0; i < this.numberOfSunflowers; i++) {
+			 if(!this.sunflowers[i].isAlive()) {
+				 this.removeFromIndex(i);
+			 }
+		}
 	}
 
 	public boolean isEmpty(Position pos) {
@@ -52,7 +59,10 @@ public class SunflowerList {
 	}
 
 	private void removeFromIndex(int ind) {
-
+		for (int i = 0; i < this.numberOfSunflowers-1; i++) {
+			this.sunflowers[i] = this.sunflowers[i+1];
+		}
+		this.numberOfSunflowers--;
 	}
 
 	public void add(Sunflower sun) {

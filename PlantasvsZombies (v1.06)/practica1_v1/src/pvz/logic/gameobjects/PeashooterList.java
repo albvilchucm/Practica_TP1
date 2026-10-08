@@ -32,7 +32,11 @@ public class PeashooterList {
 	}
 
 	public void removeDead() {
-
+		for (int i = 0; i < this.numberOfPeashooters; i++) {
+			 if(!this.peashooters[i].isAlive()) {
+				 this.removeFromIndex(i);
+			 }
+		}
 	}
 
 	public boolean isEmpty(Position pos) {
@@ -48,7 +52,10 @@ public class PeashooterList {
 	}
 
 	private void removeFromIndex(int ind) {
-
+		for (int i = 0; i < this.numberOfPeashooters-1; i++) {
+			this.peashooters[i] = this.peashooters[i+1];
+		}
+		this.numberOfPeashooters--;
 	}
 
 	public void add(Peashooter pea) {

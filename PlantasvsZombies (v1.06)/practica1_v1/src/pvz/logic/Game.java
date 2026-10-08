@@ -35,9 +35,10 @@ public class Game {
 		this.longSeed = seed;
 		this.level = level;
 		this.playerQuit = false;
+		this.rand= new Random(seed);
 		sunflowers= new SunflowerList();
 		peashooters=new PeashooterList();
-		zombies = new ZombiesManager(this, level, rand);
+		zombies = new ZombiesManager(this, level, this.rand);
 	}
 	//HAY QUE TERMINAR LA IMPLEMENTACION
 	
@@ -65,8 +66,8 @@ public class Game {
 	}
 	
 	public static Position newZombiePosition (int rows) {
-		Position a= new Position(0, rows);
-		return a;
+		Position p= new Position(rows, Game.NUM_COLS-1);
+		return p;
 	}
 	
 	public boolean isEmpty (Position p) {
@@ -92,21 +93,36 @@ public class Game {
 		return false;
 	}
 	
-	public void nextCycle() {
-		this.cycles = this.cycles+1;
+	public void generateCoins(int coins) {
+		this.coins+=coins;
 	}
 	
 	public void addObject (char plant,Position pos) {
 			if (plant == 's') {
 				Sunflower sun = new Sunflower(pos, this);
 				this.sunflowers.add(sun);
-				this.looseSunCoins(Sunflower.cost);
+				this.looseSunCoins(Sunflower.COST);
 			} 
 			else if (plant == 'p') {
 				Peashooter pea = new Peashooter(pos, this);
 				this.peashooters.add(pea);
-				this.looseSunCoins(Peashooter.cost);
+				this.looseSunCoins(Peashooter.COST);
 			}
+	}
+	
+	public void update() {
+		
+		this.zombies.addZombie();
+		
+		this.sunflowers.update();
+		this.peashooters.update();
+		this.zombies.update();
+		
+		this.sunflowers.removeDead();
+		this.peashooters.removeDead();
+		this.zombies.removeDead();
+		
+		this.cycles++;
 	}
 	
 }

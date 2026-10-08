@@ -6,10 +6,11 @@ import utils.Position;
 
 public class Zombie {
 	
-	private int damage = 1;
-	private int initial_health = 3;
+	private static final int DAMAGE = 1;
+	private static final int INITAL_HEALTH = 3;
+	private static final int MOVE_EVERY_CYCLES = 2;
+	
 	private int health;
-	private int move_every_cycles = 2;
 	private int cyclesSinceLastMovement;
 	
 	private Position pos;
@@ -18,7 +19,7 @@ public class Zombie {
 	public Zombie(Position pos, Game game2) {
 		this.pos = pos;
 		this.game = game2;
-		this.health = this.initial_health;
+		this.health = this.INITAL_HEALTH;
 		this.cyclesSinceLastMovement = 0;
 	}
 	
