@@ -78,7 +78,15 @@ public class PeashooterList {
 	}
 
 	public void receiveDamage(Position pos, int dam) {
-
+		int i = 0;
+		boolean encontrado = false;
+		while (!encontrado && i<this.numberOfPeashooters) {
+			if(this.peashooters[i].isInPosition(pos)) {
+				this.peashooters[i].receiveDamage(dam);
+				encontrado = true;
+			}
+			i++;
+		}
 	}
 
 }

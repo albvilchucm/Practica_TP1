@@ -38,7 +38,7 @@ public class Controller {
 	 * 
 	 */
 	public void run() {
-		while (!game.getPlayerQuit() && !game.haveFinished()) {
+		while (!game.getPlayerQuit()) { //&& !game.haveFinished()) {
 			this.view.showGame();
 			String[] opstring = this.view.getPrompt();
 			char opchar = getOption(opstring);

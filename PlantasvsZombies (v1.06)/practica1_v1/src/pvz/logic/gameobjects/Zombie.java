@@ -7,7 +7,7 @@ import utils.Position;
 public class Zombie {
 	
 	private static final int DAMAGE = 1;
-	private static final int INITAL_HEALTH = 3;
+	private static final int INITIAL_HEALTH = 3;
 	private static final int MOVE_EVERY_CYCLES = 2;
 	
 	private int health;
@@ -19,7 +19,7 @@ public class Zombie {
 	public Zombie(Position pos, Game game2) {
 		this.pos = pos;
 		this.game = game2;
-		this.health = this.INITAL_HEALTH;
+		this.health = Zombie.INITIAL_HEALTH;
 		this.cyclesSinceLastMovement = 0;
 	}
 	
@@ -31,36 +31,37 @@ public class Zombie {
 		return this.pos.equals(pos);
 	}
 	
-	public boolean isHorizontallyAligned(Position pos) {
-		return true;
-	}
-	
-	public boolean isVerticallyAligned(Position pos) {
-		return true;
-	}
-	
 	public void receiveAttack(int dam) {
 		this.health = this.health - dam;
 	}
 	
 	public void update() {
-		
+		if (canMove()) {
+			move();
+			this.cyclesSinceLastMovement =0;
+		}
+		else {
+			attack();
+			this.cyclesSinceLastMovement++;
+		}
 	}
 	
 	private boolean canMove() {
-		return true;
+		return (this.game.isEmpty(this.pos.left()) 
+				&& this.cyclesSinceLastMovement ==Zombie.MOVE_EVERY_CYCLES-1);
 	}
 	
 	private void move() {
-		
+		this.pos = this.pos.left();
+	}
+	
+	private void attack() {
+		Position pos = this.pos.left();
+		this.game.attackPlant(pos, Zombie.DAMAGE);
 	}
 	
 	public boolean isAlive() {
 		return (this.health>0);
-	}
-	
-	private void attack() {
-		
 	}
 	
 }

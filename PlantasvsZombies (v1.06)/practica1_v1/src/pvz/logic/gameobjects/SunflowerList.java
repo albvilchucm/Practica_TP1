@@ -81,7 +81,15 @@ public class SunflowerList {
 	}
 
 	public void receiveDamage(Position pos, int dam) {
-
+		int i = 0;
+		boolean encontrado = false;
+		while (!encontrado && i<this.numberOfSunflowers) {
+			if(this.sunflowers[i].isInPosition(pos)) {
+				this.sunflowers[i].receiveDamage(dam);
+				encontrado = true;
+			}
+			i++;
+		}
 	}
 
 }

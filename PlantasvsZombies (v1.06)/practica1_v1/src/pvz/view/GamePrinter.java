@@ -84,7 +84,6 @@ public class GamePrinter implements GameView {
 	@Override
 	public void showGame() {
 		StringBuilder str = new StringBuilder();
-
 		// Game Status
 		str.append(getInfo());
 

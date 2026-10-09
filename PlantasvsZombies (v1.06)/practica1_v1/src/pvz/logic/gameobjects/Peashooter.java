@@ -37,18 +37,21 @@ public class Peashooter {
 	}
 	
 	public void update() {
-		Position pos = this.pos.right();
-		boolean shoot = false;
-		while(!shoot && pos.col()<Game.NUM_COLS) {
-			//si hay un zombie en la posicion
-			//dispara
-		}
+		shoot();
 	}
 	
 	private void shoot() {
-		
+		Position pos = this.pos.right();
+		boolean shot = false;
+		while (!shot && pos.col() < Game.NUM_COLS) {
+			if (this.game.checkGameObject("Zombie", pos)) {
+				this.game.attackZombie(pos, Peashooter.DAMAGE);
+				shot = true;
+			}
+			pos = pos.right();
+		}
 	}
-	
+		
 	public void receiveDamage(int dam) {
 		this.health = this.health-dam;
 	}

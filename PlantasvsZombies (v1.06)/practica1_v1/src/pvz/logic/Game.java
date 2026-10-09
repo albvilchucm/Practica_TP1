@@ -54,7 +54,7 @@ public class Game {
 	}
 	
 	public int getZombies() {
-		return this.level.get_numberOfZombies();
+		return this.zombies.getRemainingZombies();
 	}
 	
 	public int getSunCoins() {
@@ -90,7 +90,7 @@ public class Game {
 	}
 	
 	public boolean haveFinished() {
-		return false;
+		return (this.zombies.doZombiesReachedTheHouse() || this.zombies.allZombiesWereKilled());
 	}
 	
 	public void generateCoins(int coins) {
@@ -123,6 +123,33 @@ public class Game {
 		this.zombies.removeDead();
 		
 		this.cycles++;
+	}
+	
+	public boolean checkGameObject(String nombre, Position pos) {
+		boolean res = false;
+		if(nombre == "Zombie") {
+			res = !this.zombies.isEmpty(pos);
+		}
+		else if(nombre == "Peashooter") {
+			res = !this.peashooters.isEmpty(pos);
+		}
+		else if(nombre == "Sunflower") {
+			res = !this.sunflowers.isEmpty(pos);
+		}
+		return res;
+	}
+	
+	public void attackZombie(Position pos, int dam) {
+		this.zombies.damageZombie(pos, dam);
+	}
+	
+	public void attackPlant(Position pos, int dam) {
+		if (checkGameObject("Peashooter", pos)) {
+			this.peashooters.receiveDamage(pos, dam);
+		}
+		if (checkGameObject("Sunflower", pos)) {
+			this.sunflowers.receiveDamage(pos, dam);
+		}
 	}
 	
 }

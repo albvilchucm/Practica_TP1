@@ -64,6 +64,7 @@ public class ZombiesManager {
 		if(canAdd) {
 			Zombie zombie = new Zombie(zombiePosition,this.game);
 			this.zombielist.add(zombie);
+			this.remainingZombies = this.remainingZombies-1;
 		}
 		return canAdd;
 	}
@@ -73,12 +74,11 @@ public class ZombiesManager {
 	}
 	
 	public boolean doZombiesReachedTheHouse() {
-		
-		return false;
+		return this.zombielist.anyInColumn(0);
 	}
 	
 	public void damageZombie(Position pos, int dam) {
-		
+		this.zombielist.damage(pos, dam);
 	}
 	
 	public String iconInPosition(Position pos) {
@@ -90,7 +90,7 @@ public class ZombiesManager {
 	}
 	
 	public void update() {
-		
+		this.zombielist.update();
 	}
 	
 	public boolean allZombiesWereKilled() {

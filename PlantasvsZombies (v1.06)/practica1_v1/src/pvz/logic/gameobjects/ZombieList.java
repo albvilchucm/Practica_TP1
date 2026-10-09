@@ -1,5 +1,6 @@
 package pvz.logic.gameobjects;
 
+import pvz.logic.Game;
 import utils.Position;
 
 public class ZombieList {
@@ -47,9 +48,16 @@ public class ZombieList {
 		this.numberOfZombies++;
 	}
 	
-	public boolean damage(Position pos, int dam) {
-		
-		return true;
+	public void damage(Position pos, int dam) {
+		int i = 0;
+		boolean encontrado = false;
+		while (!encontrado && i<this.numberOfZombies) {
+			if(this.zombies[i].isInPosition(pos)) {
+				this.zombies[i].receiveAttack(dam);
+				encontrado = true;
+			}
+			i++;
+		}
 	}
 	
 	public boolean isEmpty (Position pos) {
@@ -65,7 +73,9 @@ public class ZombieList {
 	}
 	
 	public void update() {
-		
+		for (int i = 0; i < this.numberOfZombies; i++) {
+			this.zombies[i].update();
+		}
 	}
 	
 	public void removeDead() {
@@ -77,8 +87,20 @@ public class ZombieList {
 	}
 	
 	public boolean anyInColumn(int col) {
-		
-		return true;
+		int j = 0;
+		boolean encontrado = false;
+		while (!encontrado && j<Game.NUM_ROWS) {
+		int i = 0;
+		while (!encontrado && i<this.numberOfZombies) {
+			Position pos = new Position(j,col);
+			if(this.zombies[i].isInPosition(pos)) {
+				encontrado = true;
+			}
+			i++;
+		}
+		j++;
+		}
+		return !encontrado;
 	}
 	
 	private void removeFromIndex (int ind) {
