@@ -42,14 +42,7 @@ public class Peashooter {
 	
 	private void shoot() {
 		Position pos = this.pos.right();
-		boolean shot = false;
-		while (!shot && pos.col() < Game.NUM_COLS) {
-			if (this.game.checkGameObject("Zombie", pos)) {
-				this.game.attackZombie(pos, Peashooter.DAMAGE);
-				shot = true;
-			}
-			pos = pos.right();
-		}
+		this.game.attackZombie(pos, Peashooter.DAMAGE);
 	}
 		
 	public void receiveDamage(int dam) {

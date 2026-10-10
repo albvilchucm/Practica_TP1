@@ -4,11 +4,6 @@ import pvz.logic.Game;
 import pvz.view.GamePrinter;
 import pvz.view.GameView;
 import pvz.view.Messages;
-import java.util.Scanner;
-import pvz.logic.gameobjects.Peashooter;
-import pvz.logic.gameobjects.PeashooterList;
-import pvz.logic.gameobjects.Sunflower;
-import pvz.logic.gameobjects.SunflowerList;
 import utils.Position;
 
 /**
@@ -38,125 +33,137 @@ public class Controller {
 	 * 
 	 */
 	public void run() {
-		while (!game.getPlayerQuit()) { //&& !game.haveFinished()) {
-			this.view.showGame();
-			String[] opstring = this.view.getPrompt();
-			char opchar = getOption(opstring);
+		boolean terminado = false;
+		while (!this.game.getPlayerQuit() && !terminado) { // && !game.haveFinished()) {
 
-			boolean avanzar = false;
-			boolean reset = false;
-			while (!avanzar && !this.game.getPlayerQuit()) {
-				switch (opchar) {
-				case 'a':
-					if (this.add(opstring[1].toLowerCase().charAt(0), Integer.parseInt(opstring[2]),
-							Integer.parseInt(opstring[3]))) {
-						avanzar = true;
-					}
-					break;
-				case 'l':
-					this.view.showMessage(Messages.LIST);
-					break;
-				case 'r':
-					this.game.reset();
-					avanzar = true;
-					reset = true;
-					break;
-				case 'h':
-					this.view.showMessage(Messages.HELP);
-					break;
-				case 'e':
-					this.view.showEndMessage();
-					this.game.setPlayerQuitTrue();
-					break;
-				case 'n':
-					avanzar = true;
-					break;
-				default:
-					this.view.showMessage(Messages.INVALID_COMMAND);
-					break;
+			this.view.showGame();
+			if (this.game.haveFinished()) {
+				terminado = true;
+				this.view.showEndMessage();
+				if (this.game.getZombies() == 0) {
+					this.view.showMessage(Messages.PLAYER_WINS);
+				} else {
+					this.view.showMessage(Messages.ZOMBIES_WIN);
 				}
-				if (!avanzar && !this.game.getPlayerQuit()) {
-					opstring = this.view.getPrompt();
-					opchar = getOption(opstring);
-				} else if (avanzar && !reset) {
-					this.game.update();
+			} else {
+				String[] opstring = this.view.getPrompt();
+				char opchar = getOption(opstring);
+
+				boolean avanzar = false;
+				boolean reset = false;
+				while (!avanzar && !this.game.getPlayerQuit()) {
+					switch (opchar) {
+					case 'a':
+						if (this.add(opstring[1].toLowerCase(), Integer.parseInt(opstring[2]),
+								Integer.parseInt(opstring[3]))) {
+							avanzar = true;
+						}
+						break;
+					case 'l':
+						this.view.showMessage(Messages.LIST);
+						break;
+					case 'r':
+						this.game.reset();
+						avanzar = true;
+						reset = true;
+						break;
+					case 'h':
+						this.view.showMessage(Messages.HELP);
+						break;
+					case 'e':
+						this.view.showMessage(Messages.PLAYER_QUITS);
+						this.game.setPlayerQuitTrue();
+						break;
+					case 'n':
+						avanzar = true;
+						break;
+					default:
+						this.view.showMessage(Messages.INVALID_COMMAND);
+						break;
+					}
+					if (!avanzar && !this.game.getPlayerQuit()) {
+						opstring = this.view.getPrompt();
+						opchar = getOption(opstring);
+					} else if (avanzar && !reset) {
+						this.game.update();
+					}
 				}
 			}
 		}
 	}
 
-	private boolean add(char plant, int col, int row) {
+	private boolean isValidPosition(Position pos) {
+		return this.game.isInsideBoard(pos);
+	}
+
+	private boolean isValidObject(String name) {
+		if (this.game.checkGameObject(name))
+			return true;
+		else
+			return false;
+	}
+
+	private boolean areValidCoins(String planta) {
+		return this.game.areEnoughCoins(planta);
+	}
+
+	private boolean add(String plant, int col, int row) {
+		boolean res = false;
+
 		Position pos = new Position(row, col);
-		if (game.isEmpty(pos)) {
-			if ((plant == 's' && (game.getSunCoins() >= Sunflower.COST))
-					|| (plant == 'p' && (game.getSunCoins() >= Peashooter.COST))) {
-				this.game.addObject(plant, pos);
-				return true;
-			} else if ((plant == 's' && (game.getSunCoins() < Sunflower.COST))
-					|| (plant == 'p' && (game.getSunCoins() < Peashooter.COST))) {
-				this.view.showMessage(Messages.NOT_ENOUGH_COINS);
+		if (this.isValidPosition(pos)) {
+			if (game.isEmpty(pos)) {
+				if (this.isValidObject(plant)) {
+					if (!this.areValidCoins(plant)) {
+						this.view.showMessage(Messages.NOT_ENOUGH_COINS);
+					} else {
+						this.game.addGameObject(plant, pos);
+						res = true;
+					}
+				} else {
+					this.view.showMessage(Messages.INVALID_GAME_OBJECT);
+				}
+			} else {
+				this.view.showError("Position already taken.");
 			}
+		} else {
+			this.view.showMessage(Messages.INVALID_POSITION);
 		}
-		return false;
+		return res;
 	}
 
 	private char getOption(String[] op1) { // Para la practica_v2 conviene hacerlo mejor con un tipo numerado
 		char res = 'i';
 		String op = "";
-		char planta = ' ';
-		int col = -1;
-		int row = -1;
+		boolean ok = false;
 
 		if (op1.length == 1) {
-			op = op1[0];
+			op = op1[0].toLowerCase();
+			ok = true;
 		}
 
 		else if (op1.length == 4) {
-			//La comprobacion de las plantas va en check game object name
-			op = op1[0];
-			if (op1[1].toLowerCase().equals("sunflower") || op1[1].toLowerCase().equals("peashooter")
-					|| op1[1].toLowerCase().equals("p") || op1[1].toLowerCase().equals("s"))
-				planta = op1[1].toLowerCase().charAt(0);
-			if (planta == 'p' || planta == 's') {
-				if (Character.isDigit(op1[2].charAt(0))&&Character.isDigit(op1[3].charAt(0))) {
-					col = Integer.parseInt(op1[2]);
-					row = Integer.parseInt(op1[3]);
-				}
+			// La comprobacion de las plantas va en check game object name
+			op = op1[0].toLowerCase();
+			int i = 0;
+			int j = 0;
+			;
+			if (op1[2].charAt(0) == '-')
+				i = 1;
+			if (op1[3].charAt(0) == '-')
+				j = 1;
+			if (Character.isDigit(op1[2].charAt(i)) && (Character.isDigit(op1[3].charAt(j)))) {
+				ok = true;
 			}
 		}
 
-		op = op.toLowerCase();
-		if (op.length() > 1) {
-			if (op.equals("add") && (planta == 's' || planta == 'p') && (0 <= col && col <= 7)
-					&& (0 <= row && row <= 3)) {
-				res = 'a';
-			} else if (op.equals("list")) {
-				res = 'l';
-			} else if (op.equals("reset")) {
-				res = 'r';
-			} else if (op.equals("help")) {
-				res = 'h';
-			} else if (op.equals("exit")) {
-				res = 'e';
-			} else if (op.equals("none")) {
-				res = 'n';
-			}
-		}
-
-		else {
-			if (op.equals("a") && (planta == 's' || planta == 'p') && (0 <= col && col <= 7)
-					&& (0 <= row && row <= 3)) {
-				res = 'a';
-			} else if (op.equals("l")) {
-				res = 'l';
-			} else if (op.equals("r")) {
-				res = 'r';
-			} else if (op.equals("h")) {
-				res = 'h';
-			} else if (op.equals("e")) {
-				res = 'e';
-			} else if (op.equals("n") || op.equals("")) {
-				res = 'n';
+		if (ok) {
+			if (op.equals("none") || op.equals("exit") || op.equals("add") || op.equals("list") || op.equals("help")
+					|| op.equals("reset") || op.equals("n") || op.equals("e") || op.equals("a") || op.equals("l")
+					|| op.equals("h") || op.equals("r")) {
+				res = op.toLowerCase().charAt(0);
+			} else {
+				res = 'i';
 			}
 		}
 		return res;

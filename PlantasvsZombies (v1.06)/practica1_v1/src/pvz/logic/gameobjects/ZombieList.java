@@ -100,7 +100,7 @@ public class ZombieList {
 		}
 		j++;
 		}
-		return !encontrado;
+		return encontrado;
 	}
 	
 	private void removeFromIndex (int ind) {

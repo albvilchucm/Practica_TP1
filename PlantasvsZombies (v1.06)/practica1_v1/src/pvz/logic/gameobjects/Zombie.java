@@ -7,7 +7,7 @@ import utils.Position;
 public class Zombie {
 	
 	private static final int DAMAGE = 1;
-	private static final int INITIAL_HEALTH = 3;
+	private static final int INITIAL_HEALTH = 5;
 	private static final int MOVE_EVERY_CYCLES = 2;
 	
 	private int health;

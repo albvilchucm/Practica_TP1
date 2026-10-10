@@ -58,7 +58,7 @@ public class SunflowerList {
 	}
 
 	private void removeFromIndex(int ind) {
-		for (int i = 0; i < this.numberOfSunflowers - 1; i++) {
+		for (int i = ind; i < this.numberOfSunflowers - 1; i++) {
 			this.sunflowers[i] = this.sunflowers[i + 1];
 		}
 		this.numberOfSunflowers--;

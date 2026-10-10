@@ -54,7 +54,7 @@ public class PeashooterList {
 	}
 
 	private void removeFromIndex(int ind) {
-		for (int i = 0; i < this.numberOfPeashooters - 1; i++) {
+		for (int i = ind; i < this.numberOfPeashooters - 1; i++) {
 			this.peashooters[i] = this.peashooters[i + 1];
 		}
 		this.numberOfPeashooters--;
