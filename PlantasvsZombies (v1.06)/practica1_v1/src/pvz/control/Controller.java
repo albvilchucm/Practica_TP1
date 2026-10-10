@@ -44,6 +44,7 @@ public class Controller {
 			char opchar = getOption(opstring);
 
 			boolean avanzar = false;
+			boolean reset = false;
 			while (!avanzar && !this.game.getPlayerQuit()) {
 				switch (opchar) {
 				case 'a':
@@ -56,6 +57,10 @@ public class Controller {
 					this.view.showMessage(Messages.LIST);
 					break;
 				case 'r':
+					this.game.reset();
+					avanzar = true;
+					reset = true;
+					break;
 				case 'h':
 					this.view.showMessage(Messages.HELP);
 					break;
@@ -73,7 +78,7 @@ public class Controller {
 				if (!avanzar && !this.game.getPlayerQuit()) {
 					opstring = this.view.getPrompt();
 					opchar = getOption(opstring);
-				} else if (avanzar) {
+				} else if (avanzar && !reset) {
 					this.game.update();
 				}
 			}
