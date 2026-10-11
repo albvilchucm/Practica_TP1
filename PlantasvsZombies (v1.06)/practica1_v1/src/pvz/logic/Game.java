@@ -80,9 +80,6 @@ public class Game {
 	}
 
 	public boolean haveFinished() {
-		if(this.zombies.doZombiesReachedTheHouse()) {
-		
-		}
 		return (this.zombies.doZombiesReachedTheHouse() || this.zombies.allZombiesWereKilled());
 	}
 
