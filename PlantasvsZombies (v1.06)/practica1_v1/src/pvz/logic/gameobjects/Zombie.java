@@ -41,9 +41,9 @@ public class Zombie {
 			this.cyclesSinceLastMovement =0;
 		}
 		else {
-			attack();
 			this.cyclesSinceLastMovement++;
 		}
+		attack();
 	}
 	
 	private boolean canMove() {
