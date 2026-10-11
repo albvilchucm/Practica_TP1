@@ -136,8 +136,11 @@ public class Controller {
 		char res = 'i';
 		String op = "";
 		boolean ok = false;
-
-		if (op1.length == 1) {
+		if (op1[0].equals("")) {
+			op = "none";
+			ok = true;
+		}
+		else if (op1.length == 1) {
 			op = op1[0].toLowerCase();
 			ok = true;
 		}
