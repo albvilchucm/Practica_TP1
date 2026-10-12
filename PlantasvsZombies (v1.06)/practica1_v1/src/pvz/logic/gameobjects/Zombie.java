@@ -38,7 +38,7 @@ public class Zombie {
 	public void update() {
 		if (canMove()) {
 			move();
-			this.cyclesSinceLastMovement =0;
+			this.cyclesSinceLastMovement =1;
 		}
 		else {
 			this.cyclesSinceLastMovement++;
@@ -48,7 +48,7 @@ public class Zombie {
 	
 	private boolean canMove() {
 		return (this.game.isEmpty(this.pos.left()) 
-				&& this.cyclesSinceLastMovement ==Zombie.MOVE_EVERY_CYCLES-1);
+				&& this.cyclesSinceLastMovement >=Zombie.MOVE_EVERY_CYCLES);
 	}
 	
 	private void move() {

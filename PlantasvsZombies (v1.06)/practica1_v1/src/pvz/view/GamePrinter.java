@@ -2,6 +2,7 @@ package pvz.view;
 
 import static pvz.view.Messages.PROMPT;
 
+
 import static pvz.view.Messages.debug;
 import static pvz.view.Messages.error;
 import static utils.StringUtils.*;
@@ -11,7 +12,7 @@ import utils.Position;
 import utils.StringUtils;
 
 import java.util.Scanner;
-
+import java.text.MessageFormat;
 /**
  * View component of the game (the V in MVC).
  *
@@ -63,17 +64,9 @@ public class GamePrinter implements GameView {
 		StringBuilder buffer = new StringBuilder();
 
 		// TODO fill your code
-		buffer.append("Number of cycles: ");
-		buffer.append(game.getNumberCycles());
-		buffer.append(NEW_LINE);
-		
-		buffer.append("Sun coins: ");
-		buffer.append(game.getSunCoins());
-		buffer.append(NEW_LINE);
-		
-		buffer.append("Remaining Zombies: ");
-		buffer.append(game.getZombies());
-		buffer.append(NEW_LINE);
+		buffer.append(String.format(Messages.NUMBER_OF_CYCLES, game.getNumberCycles()));
+		buffer.append(String.format(Messages.NUMBER_OF_COINS, game.getSunCoins()));
+		buffer.append(String.format(Messages.REMAINING_ZOMBIES, game.getZombies()));
 		
 		return buffer.toString();
 	}

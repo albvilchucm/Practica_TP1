@@ -29,7 +29,7 @@ public class Peashooter {
 	}
 	
 	public static String getDescription() {
-		return String.format(Messages.SUNFLOWER_DESCRIPTION,COST,DAMAGE,INITIAL_HEALTH);
+		return String.format(Messages.PEASHOOTER_DESCRIPTION,COST,DAMAGE,INITIAL_HEALTH);
 	}
 	
 	public boolean isAlive() {

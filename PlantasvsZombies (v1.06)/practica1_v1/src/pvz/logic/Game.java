@@ -58,7 +58,7 @@ public class Game {
 	}
 
 	public static Position newZombiePosition(int rows) {
-		Position p = new Position(rows, Game.NUM_COLS - 1);
+		Position p = new Position(rows, Game.NUM_COLS);
 		return p;
 	}
 
@@ -105,7 +105,7 @@ public class Game {
 	public boolean checkGameObject(String nombre) {
 		boolean res = false;
 		nombre = nombre.toLowerCase();
-		
+
 		if (nombre.equals("peashooter") || nombre.equals("p")) {
 			res = true;
 		} else if (nombre.equals("sunflower") || nombre.equals("s")) {
@@ -117,12 +117,15 @@ public class Game {
 	public void attackZombie(Position pos, int dam) {
 		boolean shot = false;
 		while (!shot && pos.col() < Game.NUM_COLS) {
-				if (!this.zombies.isEmpty(pos))
+			if (!this.zombies.isEmpty(pos))
 				shot = true;
-			
-				else pos = pos.right();
+
+			else
+				pos = pos.right();
 		}
-		this.zombies.damageZombie(pos, dam);
+		if (shot) {
+			this.zombies.damageZombie(pos, dam);
+		}
 	}
 
 	public void attackPlant(Position pos, int dam) {

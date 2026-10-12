@@ -115,19 +115,19 @@ public class Controller {
 			if (game.isEmpty(pos)) {
 				if (this.isValidObject(plant)) {
 					if (!this.areValidCoins(plant)) {
-						this.view.showMessage(Messages.NOT_ENOUGH_COINS);
+						this.view.showError(Messages.NOT_ENOUGH_COINS);
 					} else {
 						this.game.addGameObject(plant, pos);
 						res = true;
 					}
 				} else {
-					this.view.showMessage(Messages.INVALID_GAME_OBJECT);
+					this.view.showError(Messages.INVALID_GAME_OBJECT);
 				}
 			} else {
-				this.view.showError("Position already taken.");
+				this.view.showError(Messages.INVALID_POSITION);
 			}
 		} else {
-			this.view.showMessage(Messages.INVALID_POSITION);
+			this.view.showError(Messages.INVALID_POSITION);
 		}
 		return res;
 	}
