@@ -34,59 +34,63 @@ public class Controller {
 	 */
 	public void run() {
 		boolean terminado = false;
-		while (!this.game.getPlayerQuit() && !terminado) { // && !game.haveFinished()) {
-
+		while (!this.game.getPlayerQuit() && !terminado) {
 			this.view.showGame();
+			String[] opstring = this.view.getPrompt();
+			char opchar = getOption(opstring);
+
+			boolean avanzar = false;
+			boolean reset = false;
+			while (!avanzar && !this.game.getPlayerQuit()) {
+				switch (opchar) {
+				case 'a':
+					if (opstring.length == 4) {
+						if (this.add(opstring[1].toLowerCase(), Integer.parseInt(opstring[2]),
+								Integer.parseInt(opstring[3]))) {
+							avanzar = true;
+						}
+					} else {
+						this.view.showError(Messages.COMMAND_PARAMETERS_MISSING);
+					}
+					break;
+				case 'l':
+					this.view.showMessage(Messages.LIST);
+					break;
+				case 'r':
+					this.game.reset();
+					avanzar = true;
+					reset = true;
+					break;
+				case 'h':
+					this.view.showMessage(Messages.HELP);
+					break;
+				case 'e':
+					this.view.showMessage(Messages.GAME_OVER);
+					this.view.showMessage(Messages.PLAYER_QUITS);
+					this.game.setPlayerQuitTrue();
+					break;
+				case 'n':
+					avanzar = true;
+					break;
+				default:
+					this.view.showError(Messages.UNKNOWN_COMMAND);
+					break;
+				}
+				if (!avanzar && !this.game.getPlayerQuit()) {
+					opstring = this.view.getPrompt();
+					opchar = getOption(opstring);
+				} else if (avanzar && !reset) {
+					this.game.update();
+				}
+			}
 			if (this.game.haveFinished()) {
 				terminado = true;
+				this.view.showGame();
 				this.view.showEndMessage();
 				if (this.game.getZombies() == 0) {
 					this.view.showMessage(Messages.PLAYER_WINS);
 				} else {
 					this.view.showMessage(Messages.ZOMBIES_WIN);
-				}
-			} else {
-				String[] opstring = this.view.getPrompt();
-				char opchar = getOption(opstring);
-
-				boolean avanzar = false;
-				boolean reset = false;
-				while (!avanzar && !this.game.getPlayerQuit()) {
-					switch (opchar) {
-					case 'a':
-						if (this.add(opstring[1].toLowerCase(), Integer.parseInt(opstring[2]),
-								Integer.parseInt(opstring[3]))) {
-							avanzar = true;
-						}
-						break;
-					case 'l':
-						this.view.showMessage(Messages.LIST);
-						break;
-					case 'r':
-						this.game.reset();
-						avanzar = true;
-						reset = true;
-						break;
-					case 'h':
-						this.view.showMessage(Messages.HELP);
-						break;
-					case 'e':
-						this.view.showMessage(Messages.PLAYER_QUITS);
-						this.game.setPlayerQuitTrue();
-						break;
-					case 'n':
-						avanzar = true;
-						break;
-					default:
-						this.view.showMessage(Messages.INVALID_COMMAND);
-						break;
-					}
-					if (!avanzar && !this.game.getPlayerQuit()) {
-						opstring = this.view.getPrompt();
-						opchar = getOption(opstring);
-					} else if (avanzar && !reset) {
-						this.game.update();
-					}
 				}
 			}
 		}

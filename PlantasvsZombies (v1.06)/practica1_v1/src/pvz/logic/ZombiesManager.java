@@ -74,7 +74,7 @@ public class ZombiesManager {
 	}
 	
 	public boolean doZombiesReachedTheHouse() {
-		return this.zombielist.anyInColumn(0);
+		return this.zombielist.anyInColumn(-1);
 	}
 	
 	public void damageZombie(Position pos, int dam) {
