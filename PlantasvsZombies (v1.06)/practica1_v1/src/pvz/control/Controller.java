@@ -101,10 +101,7 @@ public class Controller {
 	}
 
 	private boolean isValidObject(String name) {
-		if (this.game.checkGameObject(name))
-			return true;
-		else
-			return false;
+		return this.game.checkGameObject(name);
 	}
 
 	private boolean areValidCoins(String planta) {
@@ -140,16 +137,16 @@ public class Controller {
 		char res = 'i';
 		String op = "";
 		boolean ok = false;
-		if (op1[0].equals("")) {
+		if (op1[0].equals("")) { //caso ""
 			op = "none";
 			ok = true;
 		}
-		else if (op1.length == 1) {
+		else if (op1.length == 1) { //caso "list","help","reset","none","exit"
 			op = op1[0].toLowerCase();
 			ok = true;
 		}
 
-		else if (op1.length == 4) {
+		else if (op1.length == 4) { //caso "add plant col row"
 			// La comprobacion de las plantas va en check game object name
 			op = op1[0].toLowerCase();
 			int i = 0;

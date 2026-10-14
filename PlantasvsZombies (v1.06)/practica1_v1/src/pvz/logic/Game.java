@@ -73,10 +73,9 @@ public class Game {
 			return peashooters.iconInPosition(p);
 		} else if (!this.zombies.isEmpty(p)) {
 			return zombies.iconInPosition(p);
+		} else {
+			return " ";
 		}
-
-		return " ";
-
 	}
 
 	public boolean haveFinished() {
@@ -117,11 +116,11 @@ public class Game {
 	public void attackZombie(Position pos, int dam) {
 		boolean shot = false;
 		while (!shot && pos.col() < Game.NUM_COLS) {
-			if (!this.zombies.isEmpty(pos))
+			if (!this.zombies.isEmpty(pos)) {
 				shot = true;
-
-			else
+			} else {
 				pos = pos.right();
+			}
 		}
 		if (shot) {
 			this.zombies.damageZombie(pos, dam);
@@ -152,7 +151,7 @@ public class Game {
 
 	public boolean isInsideBoard(Position pos) {
 		boolean res = false;
-		if (pos.col() <= 7 && pos.col() >= 0 && pos.row() >= 0 && pos.row() <= 3) {
+		if (pos.col() < Game.NUM_COLS && pos.col() >= 0 && pos.row() >= 0 && pos.row() < Game.NUM_ROWS) {
 			res = true;
 		}
 		return res;
