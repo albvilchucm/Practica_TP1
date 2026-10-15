@@ -11,7 +11,7 @@ public class Peashooter {
 	private static final int INITIAL_HEALTH = 3;
 	private int health;
 	
-	private Position pos;
+	private final Position pos;
 	private Game game;
 	
 	public Peashooter(Position position, Game game2) {
