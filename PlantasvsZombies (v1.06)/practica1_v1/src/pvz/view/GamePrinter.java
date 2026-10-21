@@ -1,18 +1,18 @@
 package pvz.view;
 
 import static pvz.view.Messages.PROMPT;
-
-
 import static pvz.view.Messages.debug;
 import static pvz.view.Messages.error;
-import static utils.StringUtils.*;
+import static pvz.utils.StringUtils.*;
 
 import pvz.logic.Game;
-import utils.Position;
-import utils.StringUtils;
+import pvz.logic.GameWorld;
+import pvz.logic.GameStatus;
+import pvz.utils.Position;
+import pvz.utils.StringUtils;
 
 import java.util.Scanner;
-import java.text.MessageFormat;
+
 /**
  * View component of the game (the V in MVC).
  *
@@ -39,7 +39,7 @@ public class GamePrinter implements GameView {
 	
 	private static final String MARGIN = repeat(SPACE, MARGIN_SIZE);
 
-	private static final int CELL_SIZE = 8;
+	private static final int CELL_SIZE = 12;
 
 	private static final String CELL_BORDER = repeat(CELL_BORDER_CHAR, CELL_SIZE);
 
@@ -47,10 +47,10 @@ public class GamePrinter implements GameView {
 
 	private static final String INDENTED_ROW_BORDER = String.format("%n%s%s%n", MARGIN, ROW_BORDER);
 
-	private Game game;
+	private GameStatus game;
 	private Scanner scanner;
 
-	public GamePrinter(Game game) {
+	public GamePrinter(GameStatus game) {
 		this.game = game;
 		this.scanner = new Scanner(System.in);
 	}
@@ -64,10 +64,7 @@ public class GamePrinter implements GameView {
 		StringBuilder buffer = new StringBuilder();
 
 		// TODO fill your code
-		buffer.append(String.format(Messages.NUMBER_OF_CYCLES, game.getNumberCycles()));
-		buffer.append(String.format(Messages.NUMBER_OF_COINS, game.getSunCoins()));
-		buffer.append(String.format(Messages.REMAINING_ZOMBIES, game.getZombies()));
-		
+
 		return buffer.toString();
 	}
 
@@ -77,15 +74,16 @@ public class GamePrinter implements GameView {
 	@Override
 	public void showGame() {
 		StringBuilder str = new StringBuilder();
+
 		// Game Status
 		str.append(getInfo());
 
 		// Paint game board
 		str.append(INDENTED_ROW_BORDER);
 
-		for (int row = 0; row < Game.NUM_ROWS; row++) {
+		for (int row = 0; row < GameWorld.NUM_ROWS; row++) {
 			str.append(MARGIN).append(VERTICAL_DELIMITER);
-			for (int col = 0; col < Game.NUM_COLS; col++) {
+			for (int col = 0; col < GameWorld.NUM_COLS; col++) {
 				str.append(StringUtils.centre(game.positionToString(new Position(row, col)), CELL_SIZE)).append(VERTICAL_DELIMITER);
 			}
 			str.append(INDENTED_ROW_BORDER);
