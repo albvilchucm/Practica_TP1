@@ -12,6 +12,10 @@ public class ResetCommand extends Command{
 		this.help = Messages.COMMAND_RESET_HELP;
 	}
 
+	public boolean matchCommand(String command) {
+		return (command.toLowerCase().equals(this.name) || command.equals(this.shortcut));
+	}
+	
 	@Override
 	public void execute(GameModel model, GameView view) {
 		// ...

@@ -20,15 +20,20 @@ public abstract class Command {
 		boolean found = false;
 		int i = 0;
 		int size = AVAILABLE_COMMANDS.size();
+		Command res = null;
 		while (!found && i < size) {
-			if(commandWords[0].equals(AVAILABLE_COMMANDS.get(i).name) || commandWords[0].equals(AVAILABLE_COMMANDS.get(i).shortcut) ) {
+			if( AVAILABLE_COMMANDS.get(i).matchCommand(commandWords[0])) {
+				res = AVAILABLE_COMMANDS.get(i);
 				found = true;
-				Command res = AVAILABLE_COMMANDS.get(i);
 			}
-			i++;
+			else {i++;}
 		}
-		
-		
+		if(res.name == "add") {
+			
+		}
+		return res;
 	}
 	// ...
+	protected abstract boolean matchCommand(String string);
+	
 }

@@ -12,6 +12,10 @@ public class ExitCommand extends Command {
 		this.help = Messages.COMMAND_EXIT_HELP;
 	}
 
+	public boolean matchCommand(String command) {
+		return (command.toLowerCase().equals(this.name) || command.equals(this.shortcut));
+	}
+	
 	@Override
 	public void execute(GameModel model, GameView view) {
 		// ...
